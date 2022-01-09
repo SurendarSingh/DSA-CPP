@@ -63,6 +63,28 @@ node* merge_2_ll(node* &head1, node* &head2) {
     return ps->next;
 }
 
+node* merge_2_ll_recursive(node* &head1, node* &head2) {
+    node* result;
+
+    if(head1==NULL) {
+        return head2;
+    }
+    if(head2==NULL) {
+        return head1;
+    }
+
+    if(head1->data<head2->data) {
+        result = head1;
+        result->next = merge_2_ll_recursive(head1->next, head2);
+    }
+    else {
+        result = head2;
+        result->next = merge_2_ll_recursive(head1, head2->next);
+    }
+
+    return result;
+}
+
 int main() {
     node* head1 = NULL;
     insetAtTail(head1, 1);
@@ -75,7 +97,8 @@ int main() {
     insetAtTail(head2, 7);
     display(head1);
     display(head2);
-    node* head = merge_2_ll(head1, head2);
+    // node* head = merge_2_ll(head1, head2);
+    node* head = merge_2_ll_recursive(head1, head2);
     display(head);
     return 0;
 }
